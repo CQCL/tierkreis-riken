@@ -6,41 +6,45 @@ from tierkreis.models import EmptyModel, TKR
 from tierkreis.controller.data.models import OpaqueType
 from tierkreis.storage import FileStorage, read_outputs  # type: ignore
 from tierkreis.executor import ShellExecutor, UvExecutor, MultipleExecutor
+from tierkreis.controller.data.types import ptype_from_bytes
+from pytket.backends.backendresult import BackendResult
 
 from workers.consts import WORKERS_DIR
-from workers.examples_worker.stubs import example_circuit_list, to_qasm
+from workers.examples_worker.stubs import to_qasm, ghz, parse_sqcsub_output
 from workers.tkr_sqcsub.stubs import submit
 
-BackendResult = Literal[OpaqueType["pytket.backends.backendresult.BackendResult"]]
+
+# BackendResult = Literal[OpaqueType["pytket.backends.backendresult.BackendResult"]]
 Circuit = OpaqueType["pytket._tket.circuit.Circuit"]
 storage = FileStorage(UUID(int=106), do_cleanup=True)
 uv_executor = UvExecutor(WORKERS_DIR, storage.logs_path)
-shell_executor = ShellExecutor(WORKERS_DIR, storage.logs_path.parent)
+shell_executor = ShellExecutor(WORKERS_DIR, storage.logs_path.parent, timeout=300)  # 5m
 executor = MultipleExecutor(
     uv_executor, {"shell": shell_executor}, {"tkr_sqcsub": "shell"}
 )
 
 
-def convert_and_submit() -> GraphBuilder[TKR[Circuit], TKR[bytes]]:
-    g = GraphBuilder(TKR[Circuit], submit.out())
+def convert_and_submit() -> GraphBuilder[TKR[Circuit], TKR[BackendResult]]:
+    g = GraphBuilder(TKR[Circuit], TKR[BackendResult])
     circuit_bytes = g.task(to_qasm(g.inputs))
-    out = g.task(
+    res = g.task(
         submit(
-            g.const(4),
-            g.const(30),
+            g.const(2),
+            g.const(10),
             circuit_bytes,
             g.const("qasm"),
             g.const("raw"),
             g.const("reimei-simulator"),
         ),
     )
+    out = g.task(parse_sqcsub_output(res))
     g.outputs(out)
     return g
 
 
 def graph():
-    g = GraphBuilder(EmptyModel, TKR[list[bytes]])  # type: ignore
-    circuits = g.task(example_circuit_list())
+    g = GraphBuilder(TKR[int], TKR[list[BackendResult]])  # type: ignore
+    circuits = g.task(ghz(g.inputs))
     results = g.map(
         convert_and_submit(),
         circuits,
@@ -50,5 +54,9 @@ def graph():
 
 
 if __name__ == "__main__":
-    run_graph(storage, executor, graph().get_data(), {}, polling_interval_seconds=0.1)
-    print(len(read_outputs(graph().get_data(), storage)))  # type: ignore
+    run_graph(
+        storage, executor, graph().get_data(), {"value": 2}, polling_interval_seconds=1
+    )
+
+    for out in read_outputs(graph().get_data(), storage):  # type: ignore
+        print(BackendResult.from_dict(out).get_counts())
