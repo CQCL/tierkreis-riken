@@ -1,0 +1,18 @@
+[project]
+name = "tkr-sqcsub-convert"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "pytket>=2.10.1",
+    "pytket-qiskit>=0.72.0",
+    "quantinuum-schemas>=7.0.0",
+    "tierkreis",
+]
+
+[tool.uv.sources]
+tierkreis = { path = "../../../tierkreis/tierkreis", editable = true }
+
+[dependency-groups]
+dev = [
+    "ruff>=0.14.1",
+]
