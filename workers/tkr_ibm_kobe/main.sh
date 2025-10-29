@@ -3,4 +3,4 @@ set -euo pipefail
 
 source $(dirname "$0")/scripts/backend_setup.sh ibm-kobe-dacc
 
-uv run main.py $1
+$(dirname "$0")/.venv/bin/python run main.py $1
