@@ -19,9 +19,9 @@ if [ "$#" -eq 1 ]; then
 else
  echo "usage: /path/to/backend_setup.sh <target-qpu-name>"
 fi
-DIR=$( dirname "${BASH_SOURCE[0]}" )
+DIRECTORY=$( dirname "${BASH_SOURCE[0]}" )
 # 2. Set up environment variables
-source $DIR/scripts/config.sh
+source $DIRECTORY/config.sh
 
 # 3. Load related packages with Spack
 source /vol0004/apps/oss/spack-v0.21/share/spack/setup-env.sh

@@ -1,8 +1,9 @@
+import ctypes
 import json
 from sys import argv
 from typing import NamedTuple
 from tierkreis import Worker
-
+from pathlib import Path
 from qiskit_ibm_runtime.models.backend_properties import BackendProperties  # type: ignore
 from qiskit_ibm_runtime.models.backend_configuration import QasmBackendConfiguration  # type: ignore
 
@@ -10,9 +11,10 @@ from pytket._tket.circuit import Circuit
 from pytket.backends.backendresult import BackendResult
 from pytket.extensions.qiskit.backends.ibm import IBMQBackend
 
-from models_ctypes import c_tkr_sqcsub
 
 worker = Worker("tkr_ibm_kobe")
+c_tkr_sqcsub = ctypes.CDLL(Path(__file__).parent / "build" / "tkr_sqcsub.so")
+
 
 
 class TranspileInformation(NamedTuple):
@@ -23,15 +25,18 @@ class TranspileInformation(NamedTuple):
 # @worker.task()
 def get_backend_info() -> TranspileInformation:
     print("get_backend_info")
-    res = c_tkr_sqcsub.get_transpile_info()
-    print(res)
+    config_json = ctypes.c_char_p()
+    props_json = ctypes.c_char_p()
+    res = c_tkr_sqcsub.get_transpile_info(ctypes.byref(config_json), ctypes.byref(props_json))
+
+    print(config_json)
+    print(props_json)
+
     print("config")
-    config = QasmBackendConfiguration.from_dict(json.loads(res.configuration))
+    config = QasmBackendConfiguration.from_dict(json.loads(config_json))
     print(config.backend_name)
     print("props")
-    print(res.properties)
-    print(json.loads(res.properties))
-    props = BackendProperties.from_dict(json.loads(res.properties))  # type: ignore
+    props = BackendProperties.from_dict(json.loads(props_json))  # type: ignore
     print(props.backend_name)
     return TranspileInformation(config, props)
 
@@ -49,4 +54,7 @@ def submit(circuit: Circuit) -> BackendResult: ...
 
 if __name__ == "__main__":
     # worker.app(argv)
+    print("start")
     get_backend_info()
+    print("done")
+    raise SystemExit()
