@@ -33,11 +33,6 @@ compiled_circuit = g.task(
     )
 )
 data = g.task(prepare_submission(g.inputs.config, compiled_circuit))
-# res = g.task(
-#     submit(
-#         g.const(2), g.const(100), data.qasm, g.const("qasm"), g.const("raw"), data.qpu
-#     )
-# )
 g.outputs(data)
 
 if __name__ == "__main__":
