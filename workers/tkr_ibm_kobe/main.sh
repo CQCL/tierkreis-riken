@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-DIR=$(dirname "$0")
+DIR=$( dirname "${BASH_SOURCE[0]}" )
 
 source $DIR/scripts/backend_setup.sh ibm-kobe-dacc
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-DIR=$(dirname "$0")
+DIR=$( dirname "${BASH_SOURCE[0]}" )
 source $DIR/backend_setup.sh ibm-kobe-dacc
 
 gcc -c -fPIC $DIR/../src/tkr_sqcsub.c -o $DIR/../build/tkr_sqcsub.o ${SQC_COMPILE_OPTIONS}
