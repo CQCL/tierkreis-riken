@@ -5,12 +5,10 @@ from tierkreis import run_graph  # type: ignore
 from tierkreis.builder import GraphBuilder
 from tierkreis.consts import PACKAGE_PATH
 from tierkreis.controller.data.models import TKR, OpaqueType
-from tierkreis.pytket_worker import get_backend_info, compile_using_info
 from tierkreis.executor import UvExecutor, MultipleExecutor, ShellExecutor
 from tierkreis.storage import FileStorage
 
-from workers.tkr_sqcsub_convert.stubs import SubmissionData, prepare_submission
-from workers.tkr_sqcsub.stubs import submit
+from workers.tkr_ibm_kobe.stubs import get_backend_info, compile_using_info
 
 IBMQConfig = OpaqueType["quantinuum_schemas.models.backend_config.IBMQConfig"]
 QuantinuumConfig = OpaqueType[
@@ -25,13 +23,9 @@ class SnapshotCompileRunInputs(NamedTuple):
     circuit: TKR[Circuit]
 
 
-g = GraphBuilder(SnapshotCompileRunInputs, SubmissionData)
-info = g.task(get_backend_info(g.inputs.config))
-compiled_circuit = g.task(
-    compile_using_info(
-        g.inputs.circuit, info, g.inputs.config, g.const(2), g.const(100)
-    )
-)
+g = GraphBuilder(SnapshotCompileRunInputs, TKR[Circuit])
+info = g.task(get_backend_info())
+compiled_circuit = g.task(compile_using_info(info, g.inputs.circuit))
 data = g.task(prepare_submission(g.inputs.config, compiled_circuit))
 g.outputs(data)
 

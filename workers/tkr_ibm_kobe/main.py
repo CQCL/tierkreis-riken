@@ -16,7 +16,6 @@ from models_ctypes import c_tkr_sqcsub
 worker = Worker("tkr_ibm_kobe")
 
 
-@portmapping
 class TranspileInformation(NamedTuple):
     config: QasmBackendConfiguration
     props: BackendProperties
