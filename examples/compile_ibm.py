@@ -26,8 +26,7 @@ class SnapshotCompileRunInputs(NamedTuple):
 g = GraphBuilder(SnapshotCompileRunInputs, TKR[Circuit])
 info = g.task(get_backend_info())
 compiled_circuit = g.task(compile_using_info(info, g.inputs.circuit))
-data = g.task(prepare_submission(g.inputs.config, compiled_circuit))
-g.outputs(data)
+g.outputs(compiled_circuit)
 
 if __name__ == "__main__":
     import quantinuum_schemas as qs
@@ -55,7 +54,7 @@ if __name__ == "__main__":
     )
     run_graph(
         storage,
-        executor,
+        shell_exec,
         g,
         {"circuit": ghz(), "config": config},
         polling_interval_seconds=1,

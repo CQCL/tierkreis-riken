@@ -2,7 +2,6 @@ import json
 from sys import argv
 from typing import NamedTuple
 from tierkreis import Worker
-from tierkreis.models import portmapping
 
 from qiskit_ibm_runtime.models.backend_properties import BackendProperties  # type: ignore
 from qiskit_ibm_runtime.models.backend_configuration import QasmBackendConfiguration  # type: ignore
