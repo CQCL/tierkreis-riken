@@ -16,7 +16,6 @@ worker = Worker("tkr_ibm_kobe")
 c_tkr_sqcsub = ctypes.CDLL(Path(__file__).parent / "build" / "tkr_sqcsub.so")
 
 
-
 class TranspileInformation(NamedTuple):
     config: QasmBackendConfiguration
     props: BackendProperties
@@ -27,16 +26,16 @@ def get_backend_info() -> TranspileInformation:
     print("get_backend_info")
     config_json = ctypes.c_char_p()
     props_json = ctypes.c_char_p()
-    res = c_tkr_sqcsub.get_transpile_info(ctypes.byref(config_json), ctypes.byref(props_json))
+    c_tkr_sqcsub.get_transpile_info(ctypes.byref(config_json), ctypes.byref(props_json))
 
     print(config_json)
     print(props_json)
 
     print("config")
-    config = QasmBackendConfiguration.from_dict(json.loads(config_json))
+    config = QasmBackendConfiguration.from_dict(json.loads(config_json.value))
     print(config.backend_name)
     print("props")
-    props = BackendProperties.from_dict(json.loads(props_json))  # type: ignore
+    props = BackendProperties.from_dict(json.loads(props_json.value))
     print(props.backend_name)
     return TranspileInformation(config, props)
 
