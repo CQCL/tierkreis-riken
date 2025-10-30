@@ -7,9 +7,8 @@
 #include <iostream>
 #include <string>
 
-#include <nanobind/nanobind.h>
-#include <nanobind/stl/string.h>
-#include <nanobind/stl/tuple.h>
+#include <string.h>
+#include <tuple.h>
 
 #define MAX_QASM_LEN (1024 * 1024)
 
