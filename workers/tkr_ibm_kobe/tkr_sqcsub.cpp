@@ -1,5 +1,5 @@
-#include "sqc_api.h"
-#include "sqc_ecode.h"
+#include <sqc_api.h>
+#include <sqc_ecode.h>
 #include <stdlib.h>
 #include <string.h>
 
