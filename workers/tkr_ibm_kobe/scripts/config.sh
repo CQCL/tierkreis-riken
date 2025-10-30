@@ -6,7 +6,8 @@ SQC_VERSION=0.9
 ARCH=$(uname -m)
 if [ "$ARCH" = "x86_64" ]; then
   #Packcage Name：python@3.11.6(yjlixq5), gcc@13.2.0(77gzpid)
-  SPACK_PKG="python/yjlixq5 gcc/77gzpid"
+  #SPACK_PKG="python/yjlixq5 gcc/77gzpid"
+  SPACK_PKG="gcc/77gzpid"
   #Target Name
   TARGET_NAME=x86
 elif [ "$ARCH" = "aarch64" ]; then

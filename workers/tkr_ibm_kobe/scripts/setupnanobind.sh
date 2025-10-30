@@ -2,6 +2,6 @@
 
 source $(dirname $0)/backend_setup.sh ibm-kobe-dacc
 
-# rm -rf ./build
+rm -rf ./build
 uv run cmake -S . -B build -DPython_EXECUTABLE=./.venv/bin/python
-uv run cmake --build build
+uv run cmake --build build --verbose
