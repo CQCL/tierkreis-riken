@@ -8,7 +8,10 @@
 #include <string>
 
 #include <string>
+
 #include <tuple>
+
+#include <pybind11/pybind11.h>
 
 #define MAX_QASM_LEN (1024 * 1024)
 
