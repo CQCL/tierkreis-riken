@@ -24,24 +24,23 @@ class TranspileInformation(NamedTuple):
 # @worker.task()
 def get_backend_info() -> TranspileInformation:
     c_tkr_sqcsub = ctypes.CDLL(Path(__file__).parent / "build" / "tkr_sqcsub.so")
-    del c_tkr_sqcsub
-    #c_tkr_sqcsub.get_transpile_info.restype = None
-    #libc = ctypes.CDLL(ctypes.util.find_library('c'))
+    c_tkr_sqcsub.get_transpile_info.restype = None
+    libc = ctypes.CDLL(ctypes.util.find_library("c"))
 
-    #config_json = ctypes.c_char_p()
-    #props_json = ctypes.c_char_p()
-    #c_tkr_sqcsub.get_transpile_info(ctypes.byref(config_json), ctypes.byref(props_json))
+    config_json = ctypes.c_char_p()
+    props_json = ctypes.c_char_p()
+    c_tkr_sqcsub.get_transpile_info(ctypes.byref(config_json), ctypes.byref(props_json))
 
-    #config = QasmBackendConfiguration.from_dict(json.loads(config_json.value))
-    #props = BackendProperties.from_dict(json.loads(props_json.value))
+    # config = QasmBackendConfiguration.from_dict(json.loads(config_json.value))
+    # props = BackendProperties.from_dict(json.loads(props_json.value))
 
-    #libc.free(config_json)
-    #libc.free(props_json)
+    # libc.free(config_json)
+    # libc.free(props_json)
 
-    #del libc
-    #del c_tkr_sqcsub
-    
-    return TranspileInformation("", "")
+    # del libc
+    # del c_tkr_sqcsub
+
+    return TranspileInformation(config_json.value, props_json.value)
 
 
 @worker.task()
@@ -55,13 +54,13 @@ def compile_using_info(info: TranspileInformation, circuit: Circuit) -> Circuit:
 def submit(circuit: Circuit) -> BackendResult: ...
 
 
-#if __name__ == "__main__":
-    # worker.app(argv)
+# if __name__ == "__main__":
+# worker.app(argv)
 print("start")
 info = get_backend_info()
 print(info)
 print("done")
 
 import threading
-print(threading.enumerate())
 
+print(threading.enumerate())
