@@ -39,11 +39,9 @@ PYBIND11_MODULE(tkr_sqcsub, m)
     m.def("get_transpile_info", &get_transpile_info);
 }
 
-// int main(int argc, char *argv[])
-//{
-//   char *config = "";
-//   char *props = "s";
-//   get_transpile_info(&config, &props);
-//
-//   return 0;
-// }
+int main(int argc, char *argv[])
+{
+    get_transpile_info(&config, &props);
+
+    return 0;
+}
