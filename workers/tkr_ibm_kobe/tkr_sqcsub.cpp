@@ -21,9 +21,9 @@ get_transpile_info()
     std::string props = "dummyprops";
     std::string config = "dummyconfig";
 
-    sqcInitOptions *init_options = sqcMallocInitOptions();
-    init_options->use_qiskit = 0;
-    sqcInitialize(init_options);
+    // sqcInitOptions *init_options = sqcMallocInitOptions();
+    // init_options->use_qiskit = 0;
+    // sqcInitialize(init_options);
 
     sqcQC *qcir = sqcQuantumCircuit(1);
     sqcIbmdTranspileInfo(qcir, SQC_RPC_SCHED_QC_TYPE_IBM_DACC);
