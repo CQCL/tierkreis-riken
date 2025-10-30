@@ -3,7 +3,7 @@ set -x
 set -eou pipefail
 
 source $(dirname $0)/backend_setup.sh ibm-kobe-dacc
-uv run g++ -O3 -Wall -shared -std=c++11 -fPIC $(uv run python -m pybind11 --includes) -I/vol0300/share/ra010014/jhpcq_modules/x86/SDK/SQC_library_0.9/include tkr_sqcsub.cpp -o tkr_sqcsub$(uv run python -m pybind11 --extension-suffix) \
+uv run g++ -O3 -Wall -shared -std=c++11 -fPIC tkr_sqcsub.cpp $(uv run python -m pybind11 --includes) -I/vol0300/share/ra010014/jhpcq_modules/x86/SDK/SQC_library_0.9/include -o tkr_sqcsub$(uv run python -m pybind11 --extension-suffix) \
     -L/vol0300/share/ra010014/jhpcq_modules/x86/SDK/SQC_library_0.9/lib -L/vol0300/share/ra010014/jhpcq_modules/x86/SDK/SQC_library_0.9/lib64 \
     -lsqc_api  -lsqc_rpc -lsqc_reqsched -lsqc_reqinvoker -lqtmd_sim_invoker -lsqc_dbmgr \
     -lsqc_util -lsqc_rpccommon -luuid -lsqlite3 -lprotobuf -labsl_leak_check -labsl_die_if_null \
