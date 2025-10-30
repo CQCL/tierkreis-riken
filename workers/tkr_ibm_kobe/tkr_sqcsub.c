@@ -15,9 +15,6 @@ void get_transpile_info(char *config_file, char *props_file)
     sqcQC *qcir = sqcQuantumCircuit(1);
     sqcIbmdTranspileInfo(qcir, SQC_RPC_SCHED_QC_TYPE_IBM_DACC);
 
-    props = qcir->backend_config_json;
-    config = qcir->backend_props_json;
-
     // File *outputFile = fopen("output", "a");
     printf("%s\n", qcir->backend_config_json);
 
