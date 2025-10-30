@@ -4,6 +4,7 @@ version = "0.1.0"
 requires-python = ">=3.13"
 dependencies = [
     "nanobind>=2.9.2",
+    "pybind11>=3.0.1",
     "pytket-qiskit>=0.72.0",
     "tierkreis>=2.0.6",
 ]
