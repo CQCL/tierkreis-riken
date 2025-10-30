@@ -1,7 +1,3 @@
-import ctypes
-import ctypes.util
-import json
-from sys import argv
 from typing import NamedTuple
 from tierkreis import Worker
 from pathlib import Path
@@ -23,14 +19,6 @@ class TranspileInformation(NamedTuple):
 
 # @worker.task()
 def get_backend_info() -> TranspileInformation:
-    c_tkr_sqcsub = ctypes.CDLL(Path(__file__).parent / "build" / "tkr_sqcsub.so")
-    c_tkr_sqcsub.get_transpile_info.restype = None
-    libc = ctypes.CDLL(ctypes.util.find_library("c"))
-
-    config_json = ctypes.c_char_p()
-    props_json = ctypes.c_char_p()
-    c_tkr_sqcsub.get_transpile_info(ctypes.byref(config_json), ctypes.byref(props_json))
-
     # config = QasmBackendConfiguration.from_dict(json.loads(config_json.value))
     # props = BackendProperties.from_dict(json.loads(props_json.value))
 

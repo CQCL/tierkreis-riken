@@ -350,6 +350,15 @@ wheels = [
 ]
 
 [[package]]
+name = "nanobind"
+version = "2.9.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/d1/48/edccb2ec318dee2f979765ca8e565e867569522bb55ad384d57b01c3da03/nanobind-2.9.2.tar.gz", hash = "sha256:e7608472de99d375759814cab3e2c94aba3f9ec80e62cfef8ced495ca5c27d6e", size = 984270 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/05/20/f8944f162df48a20f8f533f4e4faed63891aa368ceca8cc8b32d4c785ed4/nanobind-2.9.2-py3-none-any.whl", hash = "sha256:c37957ffd5eac7eda349cff3622ecd32e5ee1244ecc912c99b5bc8188bafd16e", size = 243830 },
+]
+
+[[package]]
 name = "networkx"
 version = "3.5"
 source = { registry = "https://pypi.org/simple" }
@@ -924,6 +933,7 @@ name = "tkr-ibm-kobe"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "nanobind" },
     { name = "pytket-qiskit" },
     { name = "tierkreis" },
 ]
@@ -936,6 +946,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "nanobind", specifier = ">=2.9.2" },
     { name = "pytket-qiskit", specifier = ">=0.72.0" },
     { name = "tierkreis", specifier = ">=2.0.6" },
 ]
