@@ -20,4 +20,6 @@ execute_process(
   OUTPUT_STRIP_TRAILING_WHITESPACE OUTPUT_VARIABLE nanobind_ROOT)
 find_package(nanobind CONFIG REQUIRED)
 
+set(CMAKE_EXE_LINKER_FLAGS "$ENV{SQC_COMPILE_OPTIONS}")
+
 nanobind_add_module(tkr_sqcsub tkr_sqcsub.cpp)
