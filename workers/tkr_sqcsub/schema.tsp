@@ -1,4 +1,4 @@
-interface tkr_sqcsub {
+interface sqcsub {
     submit(
         nqubits: integer,
         nshots: integer,

@@ -1,4 +1,4 @@
-"""Code generated from tkr_sqcsub namespace. Please do not edit."""
+"""Code generated from sqcsub namespace. Please do not edit."""
 
 from typing import NamedTuple
 from tierkreis.controller.data.models import TKR
@@ -18,4 +18,4 @@ class submit(NamedTuple):
 
     @property
     def namespace(self) -> str:
-        return "tkr_sqcsub"
+        return "sqcsub"
