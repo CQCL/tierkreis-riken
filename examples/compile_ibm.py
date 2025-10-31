@@ -6,7 +6,7 @@ from tierkreis.controller.data.models import TKR, OpaqueType
 from tierkreis.executor import UvExecutor
 from tierkreis.storage import FileStorage, read_outputs  # type: ignore
 
-from examples.data import RIKEN_WORKERS_DIR, ghz
+from data import RIKEN_WORKERS_DIR, ghz
 from workers.tkr_ibm_kobe.stubs import get_transpile_info, compile_using_info
 
 Circuit = OpaqueType["pytket._tket.circuit.Circuit"]

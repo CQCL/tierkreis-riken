@@ -1,6 +1,6 @@
 from typing import Literal
 from uuid import UUID
-from tierkreis import run_graph
+from tierkreis import run_graph  # type: ignore
 from tierkreis.builder import GraphBuilder
 from tierkreis.models import EmptyModel, TKR
 from tierkreis.controller.data.models import OpaqueType
