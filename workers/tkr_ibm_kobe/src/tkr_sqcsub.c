@@ -9,12 +9,12 @@
 int main(int argc, char *argv[])
 {
   // Initialize C-API
-  sqcInitOptions* init_options = sqcMallocInitOptions();
+  sqcInitOptions *init_options = sqcMallocInitOptions();
   init_options->use_qiskit = 0;
-  sqcInitialize(init_options); 
+  sqcInitialize(init_options);
 
   // Construct circuit
-  sqcQC* qcir = sqcQuantumCircuit(1);
+  sqcQC *qcir = sqcQuantumCircuit(1);
   // Populate config and props
   sqcIbmdTranspileInfo(qcir, SQC_RPC_SCHED_QC_TYPE_IBM_DACC);
 
