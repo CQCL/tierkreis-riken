@@ -14,7 +14,9 @@ class TranspileInfo(NamedTuple):
 
 
 def get_transpile_info_inner() -> TranspileInfo:
-    script_file = "run_local.sh" if os.environ.get("IS_DEV") else "run.sh"
+    script_file = (
+        "transpile_info_local.sh" if os.environ.get("IS_DEV") else "transpile_info.sh"
+    )
     script_path = Path(__file__).parent / "scripts" / script_file
 
     with NamedTemporaryFile("w+") as config_file:
