@@ -1,6 +1,5 @@
-#!/bin/bash
-
-# /vol0300/share/ra010014/jhpcq_modules/x86/SDK_latest/SQC_library_0.9
+#!/usr/bin/env bash
+set -xeuo pipefail
 
 #Setting up Remote Procedure Call (RPC)
 # 1. Set up IP address of quantum computer to SQC_RPC_SERVER according to a argument
@@ -19,9 +18,9 @@ if [ "$#" -eq 1 ]; then
 else
  echo "usage: /path/to/backend_setup.sh <target-qpu-name>"
 fi
-DIRECTORY=$( dirname "${BASH_SOURCE[0]}" )
+
 # 2. Set up environment variables
-source $DIRECTORY/config.sh
+source $(dirname $0)/config.sh
 
 # 3. Load related packages with Spack
 source /vol0004/apps/oss/spack-v0.21/share/spack/setup-env.sh

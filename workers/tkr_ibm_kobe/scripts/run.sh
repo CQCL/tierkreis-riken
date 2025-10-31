@@ -2,5 +2,5 @@
 set -xeuo pipefail
 
 source $(dirname $0)/backend_setup.sh ibm-kobe-dacc
-gcc $(dirname $0)/../src/tkr_sqcsub.c -o build/tkr_sqcsub.o ${SQC_COMPILE_OPTIONS} 
+$(dirname $0)/../build/tkr_sqcsub.o $1 $2
 

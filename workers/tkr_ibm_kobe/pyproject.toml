@@ -1,10 +1,8 @@
 [project]
-name = "tkr_ibm_kobe"
+name = "tkr-ibm-kobe"
 version = "0.1.0"
 requires-python = ">=3.13"
 dependencies = [
-    "nanobind>=2.9.2",
-    "pybind11>=3.0.1",
     "pytket-qiskit>=0.72.0",
     "tierkreis>=2.0.6",
 ]
@@ -12,5 +10,5 @@ dependencies = [
 [dependency-groups]
 dev = [
     "black>=25.9.0",
-    "ruff>=0.14.2",
+    "ruff>=0.14.3",
 ]
