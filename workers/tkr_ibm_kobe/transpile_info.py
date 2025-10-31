@@ -13,7 +13,7 @@ class TranspileInfo(NamedTuple):
     props: BackendProperties
 
 
-def get_transpile_info_inner() -> TranspileInfo:
+def get_info() -> TranspileInfo:
     script_file = (
         "transpile_info_local.sh" if os.environ.get("IS_DEV") else "transpile_info.sh"
     )
@@ -33,5 +33,5 @@ def get_transpile_info_inner() -> TranspileInfo:
 
 
 if __name__ == "__main__":
-    info = get_transpile_info_inner()
+    info = get_info()
     print(info)
