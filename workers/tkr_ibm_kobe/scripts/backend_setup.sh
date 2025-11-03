@@ -20,7 +20,7 @@ else
 fi
 
 # 2. Set up environment variables
-source $(dirname $0)/config.sh
+source "$( dirname -- "${BASH_SOURCE[0]}" )"/config.sh
 
 # 3. Load related packages with Spack
 source /vol0004/apps/oss/spack-v0.21/share/spack/setup-env.sh
