@@ -29,7 +29,8 @@ def submit_circuit(circuit: Circuit, n_shots: int) -> bytes:
             "input_oformat_value": "raw",
             "input_qpu_value": "ibm-kobe-dacc",
         }
-        subprocess.run([script_path], env=env)
+        out = subprocess.run([script_path], env=env)
+        print(out)
         print(output_file_name)
 
         with open(output_file_name) as fh:
