@@ -11,6 +11,7 @@
 
 int main(int argc, char *argv[])
 {
+  return 1;
   char *inputPath = argv[1];
   int nQubits = atoi(argv[2]);
   int nShots = atoi(argv[3]);
@@ -54,7 +55,7 @@ int main(int argc, char *argv[])
     }
     else
     {
-      sqcPrintQCResult("./results.txt", result_out, run_options->outFormat);
+      sqcPrintQCResult(file, result_out, run_options->outFormat);
       fclose(file);
     }
   }
