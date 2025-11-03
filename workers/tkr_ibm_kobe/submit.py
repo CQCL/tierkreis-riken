@@ -25,6 +25,7 @@ def submit_circuit(circuit: Circuit, n_shots: int) -> bytes:
                     output_file.name,
                 ]
             )
+        raise Exception(output_file.name)
         return json.load(output_file)
 
 
