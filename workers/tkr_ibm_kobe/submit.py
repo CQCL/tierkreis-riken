@@ -27,7 +27,7 @@ def submit_circuit(circuit: Circuit, n_shots: int) -> bytes:
                 "input_qpu_value": "ibm-kobe-dacc",
             }
             subprocess.run([script_path], env=env)
-        return json.load(output_file)
+        return output_file.read().encode()
 
 
 if __name__ == "__main__":
