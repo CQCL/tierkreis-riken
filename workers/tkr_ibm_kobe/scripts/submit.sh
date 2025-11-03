@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-. /vol0300/share/ra010014/jhpcq/x86/scripts/setenv-sqcsub.sh input_qpu_value
+. /vol0300/share/ra010014/jhpcq/x86/scripts/setenv-sqcsub.sh ibm-kobe-dacc
 
 sqcsub --nqubits $input_nqubits_value \
     --nshots $input_nshots_value \
