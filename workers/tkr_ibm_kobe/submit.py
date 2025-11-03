@@ -29,9 +29,12 @@ def submit_circuit(circuit: Circuit, n_shots: int) -> bytes:
             "input_qpu_value": "ibm-kobe-dacc",
         }
         subprocess.run([script_path], env=env)
+        print(output_file_name)
 
         with open(output_file_name) as fh:
-            return fh.read().encode()
+            res = fh.read().encode()
+            print(res)
+            return res
 
 
 if __name__ == "__main__":
