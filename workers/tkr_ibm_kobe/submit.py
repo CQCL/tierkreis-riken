@@ -9,22 +9,25 @@ from qiskit import qasm3  # type: ignore
 
 
 def submit_circuit(circuit: Circuit, n_shots: int) -> bytes:
-    script_file = "submit_local.sh" if os.environ.get("IS_DEV") else "submit.sh"
-    script_path = Path(__file__).parent / "scripts" / script_file
+    command = ["source", "/vol0300/share/ra010014/jhpcq/x86/scripts/setenv-sqcsub.sh"]
+    command.append("ibm-kobe-dacc")
+    command.extend(["&&", "sqcsub"])
+    if os.environ.get("IS_DEV"):
+        command = [str(Path(__file__).parent / "scripts" / "submit_local.sh")]
+
+    command.extend(["--nqubits", str(circuit.n_qubits)])
+    command.extend(["--nshots", str(n_shots)])
+    command.extend(["--iformat", "qasm"])
+    command.extend(["--oformat", "raw"])
+    command.extend(["--qpu", "ibm_kobe_dacc"])
+
     qiskit_circuit = tk_to_qiskit(circuit)
     with NamedTemporaryFile("w+", delete=False) as output_file:
-        print(output_file.name)
         with NamedTemporaryFile("w+", delete=False) as input_file:
+            command.extend(["--ifile", input_file.name])
+            command.extend(["--ofile", output_file.name])
             qasm3.dump(qiskit_circuit, input_file)  # type: ignore
-            subprocess.run(
-                [
-                    script_path,
-                    input_file.name,
-                    str(circuit.n_qubits),
-                    str(n_shots),
-                    output_file.name,
-                ]
-            )
+            subprocess.run(command)
         return json.load(output_file)
 
 
