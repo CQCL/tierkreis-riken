@@ -1,5 +1,5 @@
 #!/bin/bash
-set -xeuo pipefail
+set -euo pipefail
 
 #SQC Library Version
 SQC_VERSION=0.9

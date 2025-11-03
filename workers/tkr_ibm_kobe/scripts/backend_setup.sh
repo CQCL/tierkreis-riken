@@ -1,5 +1,5 @@
 #!/bin/bash
-set -xeuo pipefail
+set -euo pipefail
 
 #Setting up Remote Procedure Call (RPC)
 # 1. Set up IP address of quantum computer to SQC_RPC_SERVER according to a argument
