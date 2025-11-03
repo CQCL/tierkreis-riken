@@ -29,14 +29,10 @@ def submit_circuit(circuit: Circuit, n_shots: int) -> bytes:
             "input_oformat_value": "raw",
             "input_qpu_value": "ibm-kobe-dacc",
         }
-        out = subprocess.run([script_path], env=env)
-        print(out)
-        print(output_file_name)
+        subprocess.run([script_path], env=env)
 
         with open(output_file_name) as fh:
-            res = fh.read().encode()
-            print(res)
-            return res
+            return json.load(fh)
 
 
 if __name__ == "__main__":
