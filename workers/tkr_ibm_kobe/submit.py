@@ -42,6 +42,7 @@ def submit_circuit(circuit: Circuit, n_shots: int) -> bytes:
 
 
 def parse_results(res: Any) -> BackendResult:
+    print(res)
     print(res["results"][0]["data"]["c"]["samples"])
     ba = BitArray.from_samples(res["results"][0]["data"]["c"]["samples"])
     print(ba.get_counts())
