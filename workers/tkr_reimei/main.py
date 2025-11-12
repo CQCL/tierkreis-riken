@@ -2,16 +2,15 @@ from pathlib import Path
 from sys import argv, modules
 from unittest.mock import Mock
 
-import qnexus as qnx
 from pytket._tket.circuit import Circuit
 from pytket.backends.backendinfo import BackendInfo
 from pytket.backends.backendresult import BackendResult
+from pytket.architecture import FullyConnected
 from pytket.passes import BasePass
 from tierkreis import Worker
-from tierkreis.exceptions import TierkreisError
 
 from sqcsub_impl import parse_qsubmit, run_sqcsub
-from qnexus_impl import qnexus_quantinuum_device_by_name
+from qnexus_impl import qnexus_quantinuum_device_by_name, REIMEI_OPS
 
 worker = Worker("tkr_reimei")
 BATCH_FILE = Path("_scr/batches/batch_file.txt")
@@ -44,6 +43,38 @@ def compile(circuit: Circuit, optimisation_level: int) -> Circuit:
     device = qnexus_quantinuum_device_by_name("reimei")
     compilation_pass = QuantinuumBackend.pass_from_info(
         device.backend_info, optimisation_level=optimisation_level
+    )
+    compilation_pass.apply(circuit)
+    return circuit
+
+
+@worker.task()
+def compile_offline(
+    circuit: Circuit,
+    optimisation_level: int = 2,
+) -> Circuit:
+    """Gets a compiled circuit for reimei using MAGIC values for backend config.
+
+    :param circuit: The original circuit to compile.
+    :type circuit: Circuit
+    :param optimisation_level: The optimization level for the compilation, defaults to 2
+    :type optimisation_level: int, optional
+    :return: The compiled circuit.
+    :rtype: Circuit
+    """
+    mock = Mock()
+    modules["pyqir"] = mock  # pyqir is not installed on fugaku
+    from pytket.extensions.quantinuum.backends.quantinuum import QuantinuumBackend
+
+    compilation_pass = QuantinuumBackend.pass_from_info(
+        BackendInfo(
+            name="EmulatorEnabledQuantinuumBackend",
+            device_name="reimei",
+            architecture=FullyConnected(20),
+            version="0.54.0",
+            gate_set=REIMEI_OPS,
+        ),
+        optimisation_level=optimisation_level,
     )
     compilation_pass.apply(circuit)
     return circuit

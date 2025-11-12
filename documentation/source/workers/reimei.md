@@ -11,40 +11,57 @@ cd workers/tkr_reimei
 uv sync
 ```
 
-> [!WARNING]
-> Currently the package `pyqir` does not have a release candidate for the Fugaku architectures
-> As `pytket-qir` depends on it we offer a work-around by installing with `uv sync --extra qir`.
->
-> Use at your own risk!
->
-> To load the extension you have to overwrite pyqir imports like so:
->
-> ```
-> from sys import argv, modules
-> from unittest.mock import Mock
-> mock = Mock()
-> modules["pyqir"] = mock  # pyqir is not installed on fugaku
-> from pytket.extensions.quantinuum.backends.quantinuum import QuantinuumBackend
-> ```
+````{warning}
+Currently the package `pyqir` does not have a release candidate for the Fugaku architectures
+As `pytket-qir` depends on it we offer a work-around by installing with `uv sync --extra qir`.
+
+Use at your own risk!
+
+To load the extension you have to overwrite pyqir imports like so:
+
+```
+from sys import argv, modules
+from unittest.mock import Mock
+mock = Mock()
+modules["pyqir"] = mock  # pyqir is not installed on fugaku
+from pytket.extensions.quantinuum.backends.quantinuum import QuantinuumBackend
+```
+````
 
 ## Authentication
 
-To access the reimei backend information the worker uses the default mechanisms provided by the `qnexus` Python package.
+````{important}
+Accessing reimeis backend information requires authentication.
+The worker uses the default mechanisms provided by the [`pytket-quantinuum`](https://docs.quantinuum.com/tket/extensions/pytket-quantinuum/#persistent-authentication-token-storage) Python package.
+Run the following code before using the Quantinuum worker
+```python
+from pytket.extensions.quantinuum.backends.api_wrappers import QuantinuumAPI
+from pytket.extensions.quantinuum.backends.credential_storage import (
+    QuantinuumConfigCredentialStorage,
+)
+from pytket.extensions.quantinuum.backends.quantinuum import QuantinuumBackend
 
-```bash
-uv run python -c "from qnexus.client.auth import login; login()"
+backend = QuantinuumBackend(
+    device_name=<device_name>, #e.g. H2-1E
+    api_handler=QuantinuumAPI(token_store=QuantinuumConfigCredentialStorage()),
+)
+backend.login()
 ```
 
-Compilation can be only accessed if reimei is accessible by this account.
+````
+
+The `BackendInfo` can be only accessed if reimei is accessible by this account.
+To submit a circuit this worker uses `sqcsub` which requires the fugaku specific setup.
 
 ## Elementary tasks
 
 The pytket worker exposes the following elementary tasks to the user:
 
-- `get_backend_info` gets the BackendInfo object for reimei
-- `pass_from_info` gets the default pass from an BackendInfo object
-- `compile` compiles a circuit for reimei
-- `sqcsub_submit_circuits` and `sqcsub_submit_circuit` submit one/multiple circuits to reimei using `sqcsub` through python
+- `get_backend_info` gets the BackendInfo object for reimei. **Requires authentication**.
+- `pass_from_info` gets the default pass from an BackendInfo object.
+- `compile` compiles a circuit for reimei. **Requires authentication**.
+- `compile_offline` compiles a circuit for reimei using hardcoded values for the `BackendInfo`.
+- `sqcsub_submit_circuits` and `sqcsub_submit_circuit` submit one/multiple circuits to reimei using `sqcsub` through python.
 - `parse_sqcsub_output` parses the output of the `sqcsub` command to a BackendResult.
 
 Experimental
