@@ -1,0 +1,34 @@
+[project]
+name = "tkr-reimei"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "pytket>=2.10.2",
+    "qnexus>=0.35.0",
+    "tierkreis",
+]
+
+[dependency-groups]
+dev = [
+    "black>=25.9.0",
+    "ruff>=0.14.3",
+    "pytest>=9.0.1",
+]
+[tool.setuptools]
+py-modules = []
+
+[project.optional-dependencies]
+qir = [
+    "pytket-quantinuum",
+]
+
+[tool.uv]
+package=true
+# Fugaku doesn't have an install candidate for pyqir
+override-dependencies = [
+    "pyqir; sys_platform == 'never'",
+]
+
+# New functionality is not released yet
+[tool.uv.sources]
+pytket-quantinuum = { git = "https://github.com/CQCL/pytket-quantinuum" }

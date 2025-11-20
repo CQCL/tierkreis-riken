@@ -7,6 +7,7 @@ stubs:
 	cd workers/tkr_qulacs && uv run main.py --stubs-path stubs.py
 	cd workers/tkr_ibm_kobe && uv run main.py --stubs-path stubs.py
 	cd workers/examples_worker && uv run main.py --stubs-path stubs.py
+	cd workers/trk_reimei && uv run main.py --stubs-path stubs.py
 
 login:
 	echo $$GH_REGISTRY_TOKEN | docker login ghcr.io -u mwpb --password-stdin
