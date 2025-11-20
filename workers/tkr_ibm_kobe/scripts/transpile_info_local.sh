@@ -1,6 +1,6 @@
 #!/bin/bash
-set -xeuo pipefail
+set -euo pipefail
 
-cp $(dirname $0)/../data/config.json $1
-cp $(dirname $0)/../data/props.json $2
+cp "$( dirname -- "${BASH_SOURCE[0]}" )"/../data/config.json $1
+cp "$( dirname -- "${BASH_SOURCE[0]}" )"/../data/props.json $2
 
