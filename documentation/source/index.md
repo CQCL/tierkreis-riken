@@ -1,13 +1,11 @@
 # Tierkreis on Fugaku
 
-[Fugaku executor](fugaku_executor.md)
+## pjsub executor
+
+Please see the documentation in the main Tierkreis repo [here](https://cqcl.github.io/tierkreis/executors/hpc.html).
 
 ## Workers
-
-[sqcsub](workers/sqcsub.md)
 
 [IBM Kobe](workers/ibm_kobe.md)
 
 [Reimei](workers/reimei.md)
-
-[Qulacs](workers/qulacs.md)
