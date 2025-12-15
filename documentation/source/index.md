@@ -4,8 +4,6 @@
 
 ## Workers
 
-[sqcsub](workers/sqcsub.md)
-
 [IBM Kobe](workers/ibm_kobe.md)
 
 [Reimei](workers/reimei.md)
